@@ -9,5 +9,18 @@
         <h1>Community Volunteer Hub
             <p>Find local opportunities to volunteer, support community projects, and connect with organisations that need help.</p>
         </h1>
+        <h2>Available Opportunities</h2>
+
+        {% for opportunity in opportunities %}
+            <div>
+                <h3>{{ opportunity.title }}</h3>
+                <p><strong>Organization:</strong> {{ opportunity.organization }}</p>
+                <p><strong>Location:</strong> {{ opportunity.location }}</p>
+                <p><strong>Date:</strong> {{ opportunity.date }}</p>
+                <p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
+            </div>
+        {% empty %}
+            <p>No active opportunities available at the moment. Please check back later.</p>
+        {% endfor %}
     </body>
 </html>
