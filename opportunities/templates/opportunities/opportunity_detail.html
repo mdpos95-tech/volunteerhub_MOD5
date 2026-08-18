@@ -1,0 +1,12 @@
+<h1>{{ opportunity.title }}</h1>
+<p><strong>Organization:</strong> {{ opportunity.organization }}</p>
+<p><strong>Location:</strong> {{ opportunity.location }}</p>
+<p><strong>Date:</strong> {{ opportunity.date }}</p>
+<p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
+
+{% if opportunity.description %}
+    <h2>About this opportunity</h2>
+    <p>{{ opportunity.description }}</p>
+{% endif %}
+
+<a href="{% url 'opportunities:home' %}">Back to Opportunities</a>

@@ -18,6 +18,7 @@
                 <p><strong>Location:</strong> {{ opportunity.location }}</p>
                 <p><strong>Date:</strong> {{ opportunity.date }}</p>
                 <p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
+                <a href="{% url 'opportunities:opportunity_detail' opportunity.pk %}">View Opportunity</a>
             </div>
         {% empty %}
             <p>No active opportunities available at the moment. Please check back later.</p>

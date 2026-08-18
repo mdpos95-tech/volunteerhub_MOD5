@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Opportunity
 
 def home(request):
@@ -8,3 +8,11 @@ def home(request):
         "opportunities": opportunities,
     }
     return render(request, "opportunities/home.html", context)
+
+def opportunity_detail(request, pk):
+    opportunity = get_object_or_404(Opportunity, pk=pk)
+    context = {
+        "opportunity": opportunity,
+    }
+    return render(request, "opportunities/detail.html", context)
+
