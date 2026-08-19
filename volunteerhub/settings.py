@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #Custom apps for volunteering hub
     'opportunities',
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = "/"
+
+# Redirect to login URL after logout
+LOGOUT_REDIRECT_URL = "/"
+
+LOGIN_URL = "/accounts/login/"
