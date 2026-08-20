@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ opportunity.title }}{% endblock %}
+{% block content %}
+
+
+
 {% if messages %}
 {% for message in messages %}
 <p>{{ message }}</p>
@@ -25,3 +31,5 @@
 {% endif %}
 
 <a href="{% url 'opportunities:home' %}">Back to Opportunities</a>
+
+{% endblock %}  
