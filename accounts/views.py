@@ -33,3 +33,11 @@ def apply_for_opportunity(request, opportunity_id):
         messages.info(request, f"You have already applied for {opportunity.title}.")
     return redirect("opportunities:opportunity_detail", pk=opportunity_id)
 
+@login_required
+def my_applications(request):
+    applications = Application.objects.filter(user=request.user).select_related('opportunity').order_by('-applied_on')
+    context = {
+        "applications": applications,
+    }
+    return render(request, "accounts/my_applications.html", context)
+

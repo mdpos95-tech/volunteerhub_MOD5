@@ -19,5 +19,5 @@ class Meta:
     constraints = [
         models.UniqueConstraint(fields=['user', 'opportunity'], name='unique_application')
     ]    
-    def __str__(self):
+def __str__(self):
         return f"{self.user.username} - {self.opportunity.title}"
