@@ -14,5 +14,5 @@ def opportunity_detail(request, pk):
     context = {
         "opportunity": opportunity,
     }
-    return render(request, "opportunities/detail.html", context)
+    return render(request, "opportunities/opportunity_detail.html", context)
 
