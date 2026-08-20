@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        Community Volunteer Hub
+        {% endblock %} 
+    </title>
+    
+<body>
+<header>
+    <h1>Community Volunteer Hub</h1>
+    <nav><a href="{% url 'opportunities:home' %}">Opportunities</a>
+    {% if user.is_authenticated %}
+<a href="{% url 'accounts:my_applications' %}">
+My Applications</a>
+<form action="{% url 'accounts:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+    {% else %}
+        <a href="{% url 'accounts:login' %}">Login</a> | 
+        <a href="{% url 'accounts:register' %}">Register</a>
+    {% endif %}
+    </nav>
+</header> 
+<hr> {% if messages %}
+{% for message in messages %}
+    <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+{% endfor %}
+{% endif %}
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+</body>
+</html>
