@@ -1,0 +1,20 @@
+<h1>My Applications</h1>
+{% if applications %}
+   {% for application in applications %}
+        <div>
+            <h2>{{ application.opportunity.title }}</h2>
+            <p><strong>Organization:</strong> {{ application.opportunity.organization }}</p>
+            <p><strong>Location:</strong> {{ application.opportunity.location }}</p>
+            <p><strong>Applied On:</strong> {{ application.applied_on }}</p>
+            <p><strong>Status:</strong> {{ application.get_status_display }}</p>
+            {% if application.message %}
+                <p><strong>Message:</strong> {{ application.message }}</p>
+            <a href="{% url 'opportunities:opportunity_detail' pk=application.opportunity.id %}" class="btn btn-primary">View Opportunity</a>
+            {% endif %}
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>You have not applied for any opportunities yet.</p>
+{% endif %}
+<a href="{% url 'opportunities:home' %}" class="btn btn-secondary">Back to Opportunities</a>
