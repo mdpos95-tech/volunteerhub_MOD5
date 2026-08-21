@@ -2,27 +2,36 @@
 {% block title %}{{ opportunity.title }}{% endblock %}
 {% block content %}
 
-
-<h1>{{ opportunity.title }}</h1>
-<p><strong>Organization:</strong> {{ opportunity.organization }}</p>
-<p><strong>Location:</strong> {{ opportunity.location }}</p>
-<p><strong>Date:</strong> {{ opportunity.date }}</p>
-<p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title mb-4">{{ opportunity.title }}</h1>
+                <p><strong>Organization:</strong> {{ opportunity.organization }}</p>
+                <p><strong>Location:</strong> {{ opportunity.location }}</p>
+                <p><strong>Date:</strong> {{ opportunity.date }}</p>
+                <p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
+         
 
 {% if opportunity.description %}
     <h2>About this opportunity</h2>
     <p>{{ opportunity.description }}</p> 
+    
 {% endif %}
 
 {% if user.is_authenticated %}
     <form method="POST" action="{% url 'accounts:apply' opportunity.pk %}">
         {% csrf_token %}
-        <button type="submit">Apply for this opportunity</button>
+        <button type="submit" class="btn btn-success">Apply for this opportunity</button>
     </form>
 {% else %}
 <p>You need to <a href="{% url 'accounts:login' %}">log in</a> or <a href="{% url 'accounts:register' %}">register</a> to apply for this opportunity.</p>
 {% endif %}
 
-<a href="{% url 'opportunities:home' %}">Back to Opportunities</a>
+<a href="{% url 'opportunities:home' %}" class="btn btn-secondary">Back to Opportunities</a>
+            </div>
+    </div>
+</div>
+</div>
 
 {% endblock %}  
