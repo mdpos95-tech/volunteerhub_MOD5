@@ -3,13 +3,6 @@
 {% block content %}
 
 
-
-{% if messages %}
-{% for message in messages %}
-<p>{{ message }}</p>
-{% endfor %}
-{% endif %}
-
 <h1>{{ opportunity.title }}</h1>
 <p><strong>Organization:</strong> {{ opportunity.organization }}</p>
 <p><strong>Location:</strong> {{ opportunity.location }}</p>

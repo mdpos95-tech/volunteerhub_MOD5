@@ -1,15 +1,10 @@
     {% extends "base.html" %}
     {% block title %}Volunteer Opportunities{% endblock %}
     {% block content %}
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Community Volunteer Hub</title>
-    </head>
-    <body>
-        <h1>Community Volunteer Hub
+    
+        <h1>Community Volunteer Hub</h1>
             <p>Find local opportunities to volunteer, support community projects, and connect with organisations that need help.</p>
-        </h1>
+    
         <h2>Available Opportunities</h2>
 
         {% for opportunity in opportunities %}
@@ -24,5 +19,5 @@
         {% empty %}
             <p>No active opportunities available at the moment. Please check back later.</p>
         {% endfor %}
-    </body>
+    
 {% endblock %}
