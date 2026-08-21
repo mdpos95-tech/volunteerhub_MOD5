@@ -1,21 +1,26 @@
     {% extends "base.html" %}
     {% block title %}Volunteer Opportunities{% endblock %}
     {% block content %}
-    
+    <div class="text-center mb-5">
         <h1>Community Volunteer Hub</h1>
-            <p>Find local opportunities to volunteer, support community projects, and connect with organisations that need help.</p>
-    
-        <h2>Available Opportunities</h2>
-
+            <p class="lead">Find local opportunities to volunteer, support community projects, and connect with organisations that need help.</p>
+    </div>
+        <h2 class="mb-4">Available Opportunities</h2>
+<div class="row">
         {% for opportunity in opportunities %}
-            <div>
-                <h3>{{ opportunity.title }}</h3>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                <h3 class="card-title">{{ opportunity.title }}</h3>
                 <p><strong>Organization:</strong> {{ opportunity.organization }}</p>
                 <p><strong>Location:</strong> {{ opportunity.location }}</p>
                 <p><strong>Date:</strong> {{ opportunity.date }}</p>
                 <p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
-                <a href="{% url 'opportunities:opportunity_detail' opportunity.pk %}">View Opportunity</a>
+                <a href="{% url 'opportunities:opportunity_detail' opportunity.pk %}" class="btn btn-primary">View Opportunity</a>
             </div>
+        </div>
+    </div>
+    
         {% empty %}
             <p>No active opportunities available at the moment. Please check back later.</p>
         {% endfor %}
