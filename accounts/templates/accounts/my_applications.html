@@ -6,35 +6,37 @@
     <a href="{% url 'opportunities:home' %}" class="btn btn-secondary">Back to Opportunities</a>
 </div>
 
-<h1>My Applications</h1>
 {% if applications %}
-   {% for application in applications %}
-        <div class="card mb-3">
-            <div class="card-body">
-            <h2 class="h4 card-title">{{ application.opportunity.title }}</h2>
-            <p><strong>Organization:</strong> {{ application.opportunity.organization }}</p>
-            <p><strong>Location:</strong> {{ application.opportunity.location }}</p>
-            <p><strong>Applied On:</strong> {{ application.applied_on }}</p>
-            <p><strong>Status:</strong>
-             {% if application.status == 'approved' %}
-                <span class="badge bg-success">Approved</span>
-             {% elif application.status == 'rejected' %}
-                <span class="badge bg-danger">Rejected</span>
-             {% else %}
-                <span class="badge bg-warning text-dark"> {{ application.get_status_display }}</span>
-             {% endif %}
-            </p>
-
-            {% if application.message %}
-                <p><strong>Message:</strong> {{ application.message }}</p>
-            <a href="{% url 'opportunities:opportunity_detail' pk=application.opportunity.id %}" class="btn btn-primary">View Opportunity</a>
+{% for application in applications %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="h4 card-title">{{ application.opportunity.title }}</h2>
+        <p><strong>Organization:</strong> {{ application.opportunity.organization }}</p>
+        <p><strong>Location:</strong> {{ application.opportunity.location }}</p>
+        <p><strong>Applied On:</strong> {{ application.applied_on }}</p>
+        <p><strong>Status:</strong>
+            {% if application.status == 'approved' %}
+            <span class="badge bg-success">Approved</span>
+            {% elif application.status == 'rejected' %}
+            <span class="badge bg-danger">Rejected</span>
+            {% else %}
+            <span class="badge bg-warning text-dark"> {{ application.get_status_display }}</span>
             {% endif %}
-        </div>
-        <hr>
-    {% endfor %}
+        </p>
+
+        {% if application.message %}
+        <p><strong>Message:</strong> {{ application.message }}</p>
+        {% endif %}
+        <a href="{% url 'opportunities:opportunity_detail' pk=application.opportunity.id %}"
+            class="btn btn-primary">View Opportunity</a>
+        
+    </div>
+</div>
+{% endfor %}
 {% else %}
-    <p>You have not applied for any opportunities yet.</p>
+<div class="alert alert-info" role="alert">
+    You have not applied for any opportunities yet.
+</div>
 {% endif %}
-<a href="{% url 'opportunities:opportunity_detail' pk=application.opportunity.id %}" class="btn btn-secondary">Back to Opportunities</a>
 
 {% endblock %}
