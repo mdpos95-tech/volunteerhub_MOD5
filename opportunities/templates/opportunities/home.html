@@ -1,41 +1,64 @@
-    {% extends "base.html" %}
-    {% block title %}Volunteer Opportunities{% endblock %}
-    {% block content %}
-    <div class="text-center mb-5">
-        <h1>Community Volunteer Hub</h1>
-            <p class="lead">Find local opportunities to volunteer, support community projects, and connect with organisations that need help.</p>
-    </div>
-        <h2 class="mb-4">Available Opportunities</h2>
-        <div class="mb-4">
-            <label for="categoryFilter" class="form-label">Filter by category</label>
-            <select id="categoryFilter" class="form-select">
-                <option value="">All Categories</option>
-                <option value="environment">Environment</option>
-                <option value="education">Education</option>
-                <option value="community">Community</option>
-                <option value="charity">Charity</option>
-                <option value="food">Food Support</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
+{% extends "base.html" %}
+{% block title %}Volunteer Opportunities{% endblock %}
+{% block content %}
+<div class="text-center mb-5">
+    <h1>Community Volunteer Hub</h1>
+    <p class="lead">Find local opportunities to volunteer, support community projects, and connect with organisations
+        that need help.</p>
+</div>
+<h2 class="mb-4">Available Opportunities</h2>
+<div class="mb-4">
+    <label for="categoryFilter" class="form-label">Filter by category</label>
+    <select id="categoryFilter" class="form-select">
+        <option value="all">All Categories</option>
+        <option value="environment">Environment</option>
+        <option value="education">Education</option>
+        <option value="community">Community</option>
+        <option value="charity">Charity</option>
+        <option value="food">Food Support</option>
+        <option value="other">Other</option>
+    </select>
+</div>
 <div class="row">
-        {% for opportunity in opportunities %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
+    {% for opportunity in opportunities %}
+    <div class="col-md-6 col-lg-4 mb-4 opportunity-card" data-category="{{ opportunity.category }}">
+        <div class="card h-100">
+            <div class="card-body">
                 <h3 class="card-title">{{ opportunity.title }}</h3>
                 <p><strong>Organization:</strong> {{ opportunity.organization }}</p>
                 <p><strong>Category:</strong> {{ opportunity.get_category_display }}</p>
                 <p><strong>Location:</strong> {{ opportunity.location }}</p>
                 <p><strong>Date:</strong> {{ opportunity.date }}</p>
                 <p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
-                <a href="{% url 'opportunities:opportunity_detail' opportunity.pk %}" class="btn btn-primary">View Opportunity</a>
+                <a href="{% url 'opportunities:opportunity_detail' opportunity.pk %}" class="btn btn-primary">View
+                    Opportunity</a>
             </div>
         </div>
     </div>
 
-        {% empty %}
-            <p>No active opportunities available at the moment. Please check back later.</p>
-        {% endfor %}
-    
+    {% empty %}
+    <p>No active opportunities available at the moment. Please check back later.</p>
+    {% endfor %}
+</div>
+<script>
+    const categoryFilter = document.getElementById('categoryFilter');
+    const opportunityCards = document.querySelectorAll('.opportunity-card');
+
+    categoryFilter.addEventListener('change', function() {
+        const selectedCategory = categoryFilter.value;
+
+        opportunityCards.forEach(function (card) {
+            const cardCategory = card.dataset.category;
+            if (selectedCategory === "all") {
+                card.hidden = false;}
+            else if (cardCategory === selectedCategory) {
+                card.hidden = false;
+            } else {
+                card.hidden = true;
+            }
+        });
+    });
+
+
+</script>
 {% endblock %}
