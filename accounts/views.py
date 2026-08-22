@@ -74,3 +74,11 @@ def sent_messages(request):
         else: form = MessageForm()
     return render(request, "accounts/send_message.html", {"form": form})
 
+@login_required
+def archive_message(request, message_id):
+    if request.method == "POST":
+        message = get_object_or_404(Message, id=message_id, recipient=request.user)
+        message.archived = True
+        message.save()
+        messages.success(request, "Message archived successfully.")
+    return redirect("accounts:inbox")
