@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Inbox{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between-align-items-center mb-4">
+    <h1>Inbox</h1>
+    <a href="{% url 'accounts:send_message' %}" class="btn btn-primary">Send Message</a>
+
+</div>
+
+{% if_received_messages %}
+{% for message in received_messages %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="h5">
+            {{ message.subject }}
+        </h2>
+        <p><strong>From:</strong> {{ message.sender }}
+        {{ message.sender.username }}</p>
+        <p><strong>Sent:</strong> {{ message.sent_at }}</p>
+        <p>{{ message.body }}</p>
+        <form method="post" action="{% url 'accounts:archive_message' message.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Archive</button>
+        </form>
+
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="alert alert-info">
+    You have no messages in your inbox.
+</div>
+{% endif %}
+
+{% endblock %}
