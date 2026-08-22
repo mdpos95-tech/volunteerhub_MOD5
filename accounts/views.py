@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from .forms import UserUpdateForm
 from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
 
@@ -41,3 +42,14 @@ def my_applications(request):
     }
     return render(request, "accounts/my_applications.html", context)
 
+@login_required
+def profile(request):
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your profile has been updated.")
+            return redirect("accounts:profile")
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, "accounts/profile.html", {"form": form})
