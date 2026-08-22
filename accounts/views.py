@@ -59,3 +59,18 @@ def profile(request):
 def inbox(request):
     messages_received = Message.objects.filter(recipient=request.user, archived=False).order_by('-sent_at')
     return render(request, "accounts/inbox.html", {"received_messages": messages_received})
+
+@login_required
+def sent_messages(request):
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            new_message = form.save(commit=False)
+            new_message.sender = request.user
+            new_message.save()
+            messages.success(request, "Message sent successfully.")
+            return redirect("accounts:inbox")
+
+        else: form = MessageForm()
+    return render(request, "accounts/send_message.html", {"form": form})
+
