@@ -1,10 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .forms import UserUpdateForm
+from .forms import UserUpdateForm, MessageForm
 from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
 
-from .models import Application
+from .models import Application, Message
 from opportunities.models import Opportunity
 
 
@@ -53,3 +53,9 @@ def profile(request):
     else:
         form = UserUpdateForm(instance=request.user)
     return render(request, "accounts/profile.html", {"form": form})
+
+
+@login_required
+def inbox(request):
+    messages_received = Message.objects.filter(recipient=request.user, archived=False).order_by('-sent_at')
+    return render(request, "accounts/inbox.html", {"received_messages": messages_received})
