@@ -61,7 +61,7 @@ def inbox(request):
     return render(request, "accounts/inbox.html", {"received_messages": messages_received})
 
 @login_required
-def sent_messages(request):
+def send_message(request):
     if request.method == "POST":
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -71,7 +71,7 @@ def sent_messages(request):
             messages.success(request, "Message sent successfully.")
             return redirect("accounts:inbox")
 
-        else: form = MessageForm()
+    else: form = MessageForm()
     return render(request, "accounts/send_message.html", {"form": form})
 
 @login_required

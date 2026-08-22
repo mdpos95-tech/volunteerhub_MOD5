@@ -2,20 +2,20 @@
 {% block title %}Inbox{% endblock %}
 {% block content %}
 
-<div class="d-flex justify-content-between-align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Inbox</h1>
     <a href="{% url 'accounts:send_message' %}" class="btn btn-primary">Send Message</a>
 
 </div>
 
-{% if_received_messages %}
+{% if received_messages %}
 {% for message in received_messages %}
 <div class="card mb-3">
     <div class="card-body">
         <h2 class="h5">
             {{ message.subject }}
         </h2>
-        <p><strong>From:</strong> {{ message.sender }}
+        <p><strong>From:</strong> 
         {{ message.sender.username }}</p>
         <p><strong>Sent:</strong> {{ message.sent_at }}</p>
         <p>{{ message.body }}</p>
