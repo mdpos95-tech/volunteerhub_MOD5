@@ -140,3 +140,6 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 LOGIN_URL = "/accounts/login/"
+
+# During development, password reset emails are printed to the terminal.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
