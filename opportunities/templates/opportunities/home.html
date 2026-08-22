@@ -6,6 +6,18 @@
             <p class="lead">Find local opportunities to volunteer, support community projects, and connect with organisations that need help.</p>
     </div>
         <h2 class="mb-4">Available Opportunities</h2>
+        <div class="mb-4">
+            <label for="categoryFilter" class="form-label">Filter by category</label>
+            <select id="categoryFilter" class="form-select">
+                <option value="">All Categories</option>
+                <option value="environment">Environment</option>
+                <option value="education">Education</option>
+                <option value="community">Community</option>
+                <option value="charity">Charity</option>
+                <option value="food">Food Support</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
 <div class="row">
         {% for opportunity in opportunities %}
             <div class="col-md-6 col-lg-4 mb-4">
@@ -13,6 +25,7 @@
                     <div class="card-body">
                 <h3 class="card-title">{{ opportunity.title }}</h3>
                 <p><strong>Organization:</strong> {{ opportunity.organization }}</p>
+                <p><strong>Category:</strong> {{ opportunity.get_category_display }}</p>
                 <p><strong>Location:</strong> {{ opportunity.location }}</p>
                 <p><strong>Date:</strong> {{ opportunity.date }}</p>
                 <p><strong>Spaces Available:</strong> {{ opportunity.spaces_available }}</p>
@@ -20,7 +33,7 @@
             </div>
         </div>
     </div>
-    
+
         {% empty %}
             <p>No active opportunities available at the moment. Please check back later.</p>
         {% endfor %}
