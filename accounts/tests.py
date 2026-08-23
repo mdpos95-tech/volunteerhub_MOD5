@@ -69,4 +69,73 @@ class AccountFormTests(TestCase):
             applications = response.context['applications']
             self.assertEqual(len(applications), 1)  
             self.assertEqual(applications[0].user, self.user)       
-        
+
+
+class MessagingTests(TestCase):
+     def setUp(self):
+          self.sender = User.objects.create_user(username="sender", password="testpassword",)
+          self.recipient = User.objects.create_user(username="recipient", password="testpassword",)
+          self.other_user = User.objects.create_user(username="other", password="testpassword",)
+     def test_user_can_send_message(self):
+         self.client.login(username="sender", password="testpassword",)
+         response = self.client.post(reverse("accounts:send_message"),{"recipient":self.recipient.id, "subject": "Test message", "body": "Hello from the automated test",},)
+
+         self.assertEqual(response.status_code, 302)
+
+         message = Message.objects.get(
+            subject="Test message"
+        )
+
+         self.assertEqual(message.sender, self.sender)
+         self.assertEqual(message.recipient, self.recipient)
+
+     def test_recipient_can_archive_message(self):
+        message = Message.objects.create(
+            sender=self.sender,
+            recipient=self.recipient,
+            subject="Archive me",
+            body="Test message",
+        )
+
+        self.client.login(
+            username="recipient",
+            password="testpassword",
+        )
+
+        response = self.client.post(
+            reverse(
+                "accounts:archive_message",
+                args=[message.id],
+            )
+        )
+
+        self.assertEqual(response.status_code, 302)
+
+        message.refresh_from_db()
+
+        self.assertTrue(message.archived)
+
+     def test_other_user_cannot_archive_someone_elses_message(self):
+        message = Message.objects.create(
+            sender=self.sender,
+            recipient=self.recipient,
+            subject="Private message",
+            body="This belongs to the recipient.",
+        )
+
+        self.client.login(
+            username="other",
+            password="testpassword",
+        )
+
+        response = self.client.post(
+            reverse(
+                "accounts:archive_message",
+                args=[message.id],
+            )
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+        message.refresh_from_db()
+              
